@@ -5,16 +5,79 @@ interface Flyable {
     void fly();
 }
 
+interface QuackBehavior{
+    void quack();
+}
+interface FlyBehavior{
+    void fly();
+}
+
+class Quack implements QuackBehavior{
+    public void quack() {
+        System.out.println("Qwek - Qwek");
+    }
+}
+class Squeak implements QuackBehavior{
+    public void quack() {
+        System.out.println("Squeak");
+    }
+}
+class MuteQuack implements  QuackBehavior {
+    public void quack() {
+        System.out.println("Tidak Bisa Bersuara");
+    }
+}
+
+
+class FlyWithWings implements FlyBehavior{
+    @Override
+    public void fly() {
+        System.out.println("Terbang");
+    }
+}
+
+class FlyNoWay implements FlyBehavior{
+    @Override
+    public void fly() {
+        System.out.println("Tidak bisa Terbang");
+    }
+}
+class FlyWithRocketPower implements FlyBehavior{
+    @Override
+    public void fly() {
+        System.out.println("Cool, terbang menggunakan rocket");
+    }
+}
+
 abstract class Duck {
-    void quack(){
+    QuackBehavior quackBehavior;
+    FlyBehavior flyBehavior;
+
+    abstract void display();
+
+    void quack() {
         System.out.println("Qwek Qwek");
     }
 
-    void swim(){
+    void swim() {
         System.out.println("Berenang");
     }
 
-    abstract void display();
+    void performQuack() {
+        quackBehavior.quack();
+    }
+
+    void performFly() {
+        flyBehavior.fly();
+    }
+
+    void setFlyBehavior(FlyBehavior fb) {
+        flyBehavior = fb;
+    }
+
+    void setQuackBehavior(QuackBehavior qb) {
+        quackBehavior = qb;
+    }
 
     void fly(){
         System.out.println("Terbang");
@@ -22,6 +85,10 @@ abstract class Duck {
 }
 
 class MallardDuck extends Duck{
+    public MallardDuck() {
+        quackBehavior = new Quack();
+        flyBehavior = new FlyWithWings();
+    }
     @Override
     void display() {
         System.out.println("Tampilan MallardDuck");
@@ -29,6 +96,10 @@ class MallardDuck extends Duck{
 }
 
 class RedHeadDuck extends Duck{
+    public RedHeadDuck(){
+        quackBehavior = new Quack();
+        flyBehavior = new FlyWithWings();
+    }
     @Override
     void display() {
         System.out.println("Tampilan RedHeadDuck");
@@ -36,6 +107,10 @@ class RedHeadDuck extends Duck{
 }
 
 class RubberDuck extends Duck{
+    public RubberDuck() {
+        quackBehavior = new Quack();
+        flyBehavior = new FlyNoWay();
+    }
     @Override
     void display() {
         System.out.println("Tampilan RubberDuck");
@@ -52,22 +127,40 @@ class RubberDuck extends Duck{
 }
 
 class WoodenDuck extends Duck {
+    public WoodenDuck() {
+        quackBehavior = new Quack();
+        flyBehavior = new FlyNoWay();
+    }
+
     @Override
     void display() {
         System.out.println("Tampilan WoodenDuck");
     }
+}
+class ModelDuck extends Duck {
+    ModelDuck() {
+        flyBehavior = new FlyNoWay();
+        quackBehavior = new Quack();
+    }
+
     @Override
-    void quack(){
+    void display() {
+        System.out.println("Tampilan ModelDuck");
+    }
+
+    @Override
+    void quack() {
         // Tidak ada implementasi, karena bebek mainan tidak dapat bersuara
     }
 
     @Override
-    void swim(){
+    void swim() {
         System.out.println("Mengambang");
     }
 
     @Override
-    void fly(){
+    void fly() {
         // Tidak ada implementasi, karena bebek mainan tidak dapat terbang
     }
 }
+
