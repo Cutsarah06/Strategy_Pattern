@@ -1,3 +1,10 @@
+interface Quackable{
+    void quack();
+}
+interface Flyable {
+    void fly();
+}
+
 abstract class Duck {
     void quack(){
         System.out.println("Qwek Qwek");
